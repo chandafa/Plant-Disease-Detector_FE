@@ -7,15 +7,36 @@ export default function PlantAnalysis() {
   const [result, setResult] = useState(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
+  const [isDragOver, setIsDragOver] = useState(false);
 
-  const handleFileChange = (e) => {
-    const selectedFile = e.target.files[0];
+  const handleFileSelect = (selectedFile) => {
     if (selectedFile) {
       setFile(selectedFile);
       setPreview(URL.createObjectURL(selectedFile));
       setResult(null);
       setError(null);
     }
+  };
+
+  const handleFileChange = (e) => {
+    const selectedFile = e.target.files[0];
+    handleFileSelect(selectedFile);
+  };
+
+  const handleDrop = (e) => {
+    e.preventDefault();
+    setIsDragOver(false);
+    const droppedFile = e.dataTransfer.files[0];
+    handleFileSelect(droppedFile);
+  };
+
+  const handleDragOver = (e) => {
+    e.preventDefault();
+    setIsDragOver(true);
+  };
+
+  const handleDragLeave = () => {
+    setIsDragOver(false);
   };
 
   const analyzePlant = async () => {
@@ -46,13 +67,19 @@ export default function PlantAnalysis() {
     <div className="max-w-2xl p-6 mx-auto bg-white rounded-lg shadow-md">
       <h2 className="mb-4 text-2xl font-bold">Deteksi Penyakit Tanaman</h2>
 
-      <div className="mb-4">
-        <label className="block mb-2 font-medium">Upload Gambar Daun</label>
+      <div
+        onDrop={handleDrop}
+        onDragOver={handleDragOver}
+        onDragLeave={handleDragLeave}
+        className={`mb-4 p-6 border-2 border-dashed rounded-md text-center transition-all duration-200
+          ${isDragOver ? "border-green-500 bg-green-50" : "border-gray-300"}`}
+      >
+        <p className="mb-2 text-gray-600">Seret dan lepas gambar ke sini, atau klik tombol di bawah untuk memilih file.</p>
         <input
           type="file"
           accept="image/*"
           onChange={handleFileChange}
-          className="block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:text-sm file:font-semibold file:bg-green-50 file:text-green-700 hover:file:bg-green-100"
+          className="block mx-auto text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:text-sm file:font-semibold file:bg-green-50 file:text-green-700 hover:file:bg-green-100"
         />
       </div>
 

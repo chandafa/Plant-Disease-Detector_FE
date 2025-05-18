@@ -3,6 +3,7 @@ import Header from "./components/Header";
 // import FileUpload from "./components/FileUpload";
 import PlantAnalysis from "./components/PlantAnalysis";
 import ResultDisplay from "./components/ResultDisplay";
+import Footer from "./components/Footer";
 
 function App() {
   const [result, setResult] = useState(null);
@@ -39,6 +40,7 @@ function App() {
           )}
         </div>
       </main>
+      <Footer />
     </div>
   );
 }
