@@ -49,7 +49,7 @@ export default function PlantAnalysis() {
       const formData = new FormData();
       formData.append("file", file);
 
-      const response = await axios.post("https://chandafa-plant-disease-detection-ai.hf.space/analyze/", formData, {
+      const response = await axios.post("http://localhost:8000/analyze/", formData, {
         headers: {
           "Content-Type": "multipart/form-data",
         },
@@ -71,23 +71,26 @@ export default function PlantAnalysis() {
         onDrop={handleDrop}
         onDragOver={handleDragOver}
         onDragLeave={handleDragLeave}
-        className={`mb-4 p-6 border-2 border-dashed rounded-md text-center transition-all duration-200
-          ${isDragOver ? "border-green-500 bg-green-50" : "border-gray-300"}`}
+        className={`mb-4 p-6 border-2 border-dashed rounded-md text-center transition-all duration-200 ${isDragOver ? "border-green-500 bg-green-50" : "border-gray-300"}`}
       >
-        <p className="mb-2 text-gray-600">Seret dan lepas gambar ke sini, atau klik tombol di bawah untuk memilih file.</p>
-        <input
-          type="file"
-          accept="image/*"
-          onChange={handleFileChange}
-          className="block mx-auto text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:text-sm file:font-semibold file:bg-green-50 file:text-green-700 hover:file:bg-green-100"
-        />
-      </div>
+        {!preview && (
+          <>
+            <p className="mb-2 text-gray-600">Seret dan lepas gambar ke sini, atau klik tombol di bawah untuk memilih file.</p>
+            <input
+              type="file"
+              accept="image/*"
+              onChange={handleFileChange}
+              className="block mx-auto text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:text-sm file:font-semibold file:bg-green-50 file:text-green-700 hover:file:bg-green-100"
+            />
+          </>
+        )}
 
-      {preview && (
-        <div className="mb-4">
-          <img src={preview} alt="Preview" className="mx-auto border border-gray-200 rounded-md max-h-64" />
-        </div>
-      )}
+        {preview && (
+          <div className="mb-4">
+            <img src={preview} alt="Preview" className="mx-auto border border-gray-200 rounded-md max-h-64" />
+          </div>
+        )}
+      </div>
 
       <button
         onClick={analyzePlant}

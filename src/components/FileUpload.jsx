@@ -26,7 +26,7 @@ export default function FileUpload({ setResult, setIsLoading, setError }) {
     formData.append("file", selectedFile);
 
     try {
-      const response = await axios.post("https://chandafa-plant-disease-detection-ai.hf.space/predict/", formData, {
+      const response = await axios.post("http://localhost:8000/predict/", formData, {
         headers: {
           "Content-Type": "multipart/form-data",
         },
