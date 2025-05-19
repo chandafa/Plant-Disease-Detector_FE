@@ -49,7 +49,7 @@ export default function PlantAnalysis() {
       const formData = new FormData();
       formData.append("file", file);
 
-      const response = await axios.post("http://localhost:8000/analyze/", formData, {
+      const response = await axios.post("https://chandafa-plant-disease-detection-ai.hf.space/analyze/", formData, {
         headers: {
           "Content-Type": "multipart/form-data",
         },
